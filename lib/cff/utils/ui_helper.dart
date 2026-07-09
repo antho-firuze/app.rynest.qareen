@@ -289,7 +289,9 @@ extension IconExtensions on Icon {
     );
   }
 
-  Icon clr(Color? color) => Icon(icon, color: color);
+  Icon clr(Color? color) => Icon(icon, size: this.size, color: color);
+
+  Icon sizex(double? size) => Icon(icon, size: size, color: color);
 }
 
 Widget bumperBottom(BuildContext context) => SizedBox(height: MediaQuery.of(context).padding.bottom);
@@ -310,4 +312,3 @@ String countryCodeToEmoji(String? countryCode) {
   final int secondLetter = countryCode.toUpperCase().codeUnitAt(1) - 0x41 + 0x1F1E6;
   return String.fromCharCode(firstLetter) + String.fromCharCode(secondLetter);
 }
-

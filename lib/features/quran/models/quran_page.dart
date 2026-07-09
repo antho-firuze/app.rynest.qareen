@@ -1,5 +1,4 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:qareen/features/quran2/utils/math_utils.dart';
 
 part 'quran_page.freezed.dart';
 part 'quran_page.g.dart';
@@ -31,4 +30,11 @@ extension PageExt on QuranPage {
     0 => '¾ Hizb $hizb',
     _ => 'Hizb $hizb',
   };
+}
+
+extension Round on double {
+  int get fixedRound {
+    if (this == roundToDouble()) return toInt();
+    return toInt() + 1;
+  }
 }

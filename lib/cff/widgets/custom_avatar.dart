@@ -8,10 +8,10 @@ class CustomAvatar extends StatelessWidget {
     this.image,
     this.initial,
     this.size = 45,
-    this.borderRadius,
-    this.ratio = 1.0,
+    // this.ratio = 1.0,
     this.fit = BoxFit.cover,
-    this.shape = BoxShape.circle,
+    this.showBorder = false,
+    this.isCircle = true,
     this.onTap,
   });
 
@@ -19,14 +19,14 @@ class CustomAvatar extends StatelessWidget {
   final String? initial;
   final double size;
   final BoxFit fit;
-  final double ratio;
-  final BoxShape shape;
-  final BorderRadiusGeometry? borderRadius;
+  // final double ratio;
+  final bool showBorder;
+  final bool isCircle;
   final Function()? onTap;
 
   @override
   Widget build(BuildContext context) {
-    final imageSrc = image ?? 'assets/images/avatar.png';
+    final imageSrc = image ?? 'assets/images/avatar-men.png';
     final errorWidget = CustomImage(src: 'assets/images/avatar-broken.png', onTap: onTap, fit: fit);
     return SizedBox(
       width: size,
@@ -34,23 +34,24 @@ class CustomAvatar extends StatelessWidget {
       child: Container(
         decoration: BoxDecoration(
           color: primaryLight,
-          borderRadius: shape == BoxShape.circle ? null : borderRadius ?? BorderRadius.circular(12),
-          shape: shape,
+          border: Border.all(color: primaryLight, width: 2),
+          borderRadius: isCircle ? null : BorderRadius.circular(12),
+          shape: isCircle ? BoxShape.circle : BoxShape.rectangle,
         ),
         child: ClipRRect(
-          borderRadius: borderRadius ?? BorderRadius.circular(12),
-          child: shape == BoxShape.circle
+          borderRadius: BorderRadius.circular(45),
+          child: isCircle
               ? Center(
                   child: OverflowBox(
-                    maxWidth: size * ratio,
-                    maxHeight: size * ratio,
-                    child: CustomImage(src: imageSrc, onTap: onTap, fit: fit, errorWidget: errorWidget),
+                    maxWidth: size * 1.0,
+                    maxHeight: size * 1.0,
+                    child: CustomImage(src: imageSrc, onTap: onTap, fit: BoxFit.fill, errorWidget: errorWidget),
                   ),
                 )
               : Center(
                   child: OverflowBox(
-                    maxWidth: size * ratio,
-                    maxHeight: size * ratio,
+                    maxWidth: size * 1.0,
+                    maxHeight: size * 1.0,
                     child: CustomImage(src: imageSrc, onTap: onTap, fit: fit, errorWidget: errorWidget),
                   ),
                 ),

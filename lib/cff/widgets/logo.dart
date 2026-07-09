@@ -97,7 +97,7 @@ class LogoH extends StatelessWidget {
           spacing: 10,
           mainAxisSize: MainAxisSize.min,
           children: [
-            CustomImage(src: src ?? 'assets/icons/ic-logo_2-512.png', color: color, height: logoHeight),
+            CustomImage(src: src ?? 'assets/icons/ic-logo_2-512.png', color: color, height: logoHeight ?? 100),
             Text('Qareen').size((height ?? 40) - 10).family('PlayfairDisplay').clr(color).bold(),
           ],
         ),

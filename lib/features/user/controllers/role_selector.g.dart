@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'quran_overlay.dart';
+part of 'role_selector.dart';
 
 // **************************************************************************
 // RiverpodGenerator
@@ -9,50 +9,51 @@ part of 'quran_overlay.dart';
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint, type=warning
 
-@ProviderFor(QuranOverlay)
-final quranOverlayProvider = QuranOverlayProvider._();
+@ProviderFor(RoleSelector)
+final roleSelectorProvider = RoleSelectorProvider._();
 
-final class QuranOverlayProvider extends $NotifierProvider<QuranOverlay, bool> {
-  QuranOverlayProvider._()
+final class RoleSelectorProvider
+    extends $NotifierProvider<RoleSelector, Role?> {
+  RoleSelectorProvider._()
     : super(
         from: null,
         argument: null,
         retry: null,
-        name: r'quranOverlayProvider',
+        name: r'roleSelectorProvider',
         isAutoDispose: false,
         dependencies: null,
         $allTransitiveDependencies: null,
       );
 
   @override
-  String debugGetCreateSourceHash() => _$quranOverlayHash();
+  String debugGetCreateSourceHash() => _$roleSelectorHash();
 
   @$internal
   @override
-  QuranOverlay create() => QuranOverlay();
+  RoleSelector create() => RoleSelector();
 
   /// {@macro riverpod.override_with_value}
-  Override overrideWithValue(bool value) {
+  Override overrideWithValue(Role? value) {
     return $ProviderOverride(
       origin: this,
-      providerOverride: $SyncValueProvider<bool>(value),
+      providerOverride: $SyncValueProvider<Role?>(value),
     );
   }
 }
 
-String _$quranOverlayHash() => r'bec7ca7639414492dca0353e77390648aea882ff';
+String _$roleSelectorHash() => r'7abcc7e293d3bbbe8c940a02250346a14763dce4';
 
-abstract class _$QuranOverlay extends $Notifier<bool> {
-  bool build();
+abstract class _$RoleSelector extends $Notifier<Role?> {
+  Role? build();
   @$mustCallSuper
   @override
   void runBuild() {
-    final ref = this.ref as $Ref<bool, bool>;
+    final ref = this.ref as $Ref<Role?, Role?>;
     final element =
         ref.element
             as $ClassProviderElement<
-              AnyNotifier<bool, bool>,
-              bool,
+              AnyNotifier<Role?, Role?>,
+              Role?,
               Object?,
               Object?
             >;

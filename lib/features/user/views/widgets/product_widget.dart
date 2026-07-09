@@ -123,7 +123,7 @@ class ProductWidget extends ConsumerWidget {
       child: CustomInkWell(
         radius: 10,
         onTap: () => context.goto(page: ProductDetailView(data: data)),
-        child: Stack(
+        text: Stack(
           children: [
             Padding(
               padding: const EdgeInsets.only(bottom: 10),

@@ -41,7 +41,7 @@ final class QuranVerseProvider
   }
 }
 
-String _$quranVerseHash() => r'c236f5a2c8dab86722bf3732d747a70795d0ca4f';
+String _$quranVerseHash() => r'e0ab2ff2d1f4bba4e60bfdd46cfd3bcddbcf1ff2';
 
 abstract class _$QuranVerse extends $Notifier<List<Verse>> {
   List<Verse> build();

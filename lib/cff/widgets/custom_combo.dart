@@ -51,6 +51,9 @@ class CustomCombo extends StatefulWidget {
     this.onChanged,
     this.items,
     this.type = ComboType.gender,
+    this.filled,
+    this.fillColor,
+    this.isRoudedBorder = false,
   });
 
   final String? initialValue;
@@ -74,6 +77,9 @@ class CustomCombo extends StatefulWidget {
   final String? Function(String? val)? validator;
   final List<String>? items;
   final ComboType type;
+  final bool? filled;
+  final Color? fillColor;
+  final bool isRoudedBorder;
 
   @override
   State<CustomCombo> createState() => _CustomComboState();
@@ -163,8 +169,13 @@ class _CustomComboState extends State<CustomCombo> with SingleTickerProviderStat
       keyboardType: widget.keyboardType,
       textInputAction: widget.textInputAction,
       decoration: InputDecoration(
-        // filled: true,
-        // fillColor: Colors.white,
+        border: widget.isRoudedBorder ? OutlineInputBorder(borderRadius: BorderRadius.circular(16)) : null,
+        enabledBorder: widget.isRoudedBorder ? OutlineInputBorder(borderRadius: BorderRadius.circular(16)) : null,
+        focusedBorder: widget.isRoudedBorder ? OutlineInputBorder(borderRadius: BorderRadius.circular(16)) : null,
+        errorBorder: widget.isRoudedBorder ? OutlineInputBorder(borderRadius: BorderRadius.circular(16)) : null,
+        focusedErrorBorder: widget.isRoudedBorder ? OutlineInputBorder(borderRadius: BorderRadius.circular(16)) : null,
+        filled: true,
+        fillColor: widget.fillColor,
         labelText: labelText,
         // labelStyle: tsBodyM(),
         hintText: widget.hintText,

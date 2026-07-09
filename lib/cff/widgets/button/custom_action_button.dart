@@ -1,6 +1,9 @@
 import 'package:qareen/cff/utils/darkmode_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:qareen/cff/core/app_color.dart';
+import 'package:super_icons/super_icons.dart';
+
+enum ActionType { search, back, favourite, notification }
 
 class CustomActionButton extends StatelessWidget {
   const CustomActionButton({
@@ -14,6 +17,9 @@ class CustomActionButton extends StatelessWidget {
     this.showBorder = true,
     this.forAppBar = true,
     this.onPressed,
+    this.hasNotif = false,
+    this.actionType,
+    this.invertColor = false,
   });
 
   final String? tooltip;
@@ -24,20 +30,23 @@ class CustomActionButton extends StatelessWidget {
   final bool flat;
   final bool showBorder;
   final bool forAppBar;
+  final bool hasNotif;
   final void Function()? onPressed;
+  final ActionType? actionType;
+  final bool invertColor;
 
   @override
   Widget build(BuildContext context) {
     // ONLY ICON
-    if (icon != null && child == null) {
-      final _btnAppBarStyle = TextButton.styleFrom(
-        foregroundColor: oWhite,
-        backgroundColor: backgroundColor ?? Colors.transparent,
-        iconColor: oWhite,
-        shadowColor: Colors.transparent,
-        elevation: 0,
-        padding: EdgeInsets.zero,
-      );
+    if (child == null && (icon != null || actionType != null)) {
+      // final _btnAppBarStyle = TextButton.styleFrom(
+      //   foregroundColor: oWhite,
+      //   backgroundColor: backgroundColor ?? Colors.transparent,
+      //   iconColor: oWhite,
+      //   shadowColor: Colors.transparent,
+      //   elevation: 0,
+      //   padding: EdgeInsets.zero,
+      // );
       final _btnStyleNormal = IconButton.styleFrom(
         foregroundColor: foregroundColor ?? oWhite,
         backgroundColor: backgroundColor ?? primaryLight,
@@ -53,13 +62,44 @@ class CustomActionButton extends StatelessWidget {
         padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
         // iconSize: 17,
       );
-      return Tooltip(
-        message: tooltip ?? "",
-        child: IconButton(
-          onPressed: onPressed,
-          style: forAppBar ? _btnAppBarStyle : (flat ? _btnStyleFlat : _btnStyleNormal),
-          icon: icon!,
-        ),
+      var _icon = icon;
+      if (actionType != null) {
+        _icon = switch (actionType) {
+          ActionType.back => Icon(Icons.chevron_left, color: invertColor ? oBlack.whenDark(oWhite) : oWhite, size: 35),
+          ActionType.notification => Icon(
+            SuperIcons.cl_bell_line,
+            color: invertColor ? oBlack.whenDark(oWhite) : oWhite,
+            size: 30,
+          ),
+          _ => icon,
+        };
+      }
+      return Stack(
+        children: [
+          Tooltip(
+            message: tooltip ?? "",
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: IconButton(
+                onPressed: onPressed,
+                style: forAppBar ? null : (flat ? _btnStyleFlat : _btnStyleNormal),
+                icon: _icon!,
+              ),
+            ),
+          ),
+          if (hasNotif)
+            Positioned(
+              right: 20,
+              top: 18,
+              child: SizedBox(
+                width: 9,
+                height: 9,
+                child: Container(
+                  decoration: BoxDecoration(color: oRed50, shape: BoxShape.circle),
+                ),
+              ),
+            ),
+        ],
       );
     }
 

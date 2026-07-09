@@ -41,7 +41,7 @@ final class QuranPagesProvider
   }
 }
 
-String _$quranPagesHash() => r'b91e08469474b6e09cbe477809f1b54aac2939e2';
+String _$quranPagesHash() => r'f5f6c960f2a163043f40305eaf00dad5e4cff9ca';
 
 abstract class _$quranPages extends $Notifier<List<QuranPage>> {
   List<QuranPage> build();

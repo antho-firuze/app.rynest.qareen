@@ -15,8 +15,10 @@ class CustomImage extends StatelessWidget {
     this.color,
     this.borderRadius = 0,
     this.errorWidget,
-    this.errorTitle = "Foto belum tersedia !",
-    this.onTap, this.height,
+    this.errorTitle = "",
+    // this.errorTitle = "Foto belum tersedia !",
+    this.onTap,
+    this.height,
   });
 
   final dynamic src;
@@ -89,9 +91,11 @@ class ImageFailed extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [const CustomIcon(SuperIcons.is_warning_2_outline, size: 50), Text(title).clr(oGrey70).center()],
+    return SingleChildScrollView(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [const CustomIcon(SuperIcons.is_warning_2_outline, size: 50), Text(title).clr(oGrey70).center()],
+      ),
     );
   }
 }

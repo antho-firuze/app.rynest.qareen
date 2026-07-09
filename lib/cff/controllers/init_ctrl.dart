@@ -1,7 +1,9 @@
 import 'package:qareen/cff/controllers/permission_ctrl.dart';
+import 'package:qareen/cff/controllers/waklthrough_ctrl.dart';
 import 'package:qareen/cff/services/assets_service.dart';
 import 'package:qareen/cff/services/network_service.dart';
 import 'package:qareen/cff/services/version_service.dart';
+import 'package:qareen/cff/utils/log_utils.dart';
 import 'package:qareen/cff/utils/page_utils.dart';
 import 'package:qareen/cff/views/walkthrough_view.dart';
 import 'package:qareen/features/auth/views/signin_view.dart';
@@ -10,16 +12,18 @@ import 'package:qareen/features/auth/controllers/auth_controller.dart';
 import 'package:qareen/cff/utils/router.dart';
 import 'package:qareen/features/quran/controllers/quran_setting.dart';
 import 'package:qareen/features/quran/views/home_quran_view.dart';
+import 'package:qareen/features/user/controllers/role_selector.dart';
+import 'package:qareen/features/user/views/RoleSelector_view.dart';
 import 'package:qareen/features/user/views/home_view.dart';
 
 import '../services/sharedpref_service.dart';
 
+final initCtrlProvider = Provider(InitCtrl.new);
+
 class InitCtrl {
   final Ref ref;
 
-  InitCtrl(this.ref) : _showWalkThrough = ref.read(sharedPrefProvider).getBool('SHOW_WALKTHROUGH') ?? true;
-
-  final bool _showWalkThrough;
+  InitCtrl(this.ref);
 
   Future<bool> initApps() async {
     // Initialize Network
@@ -28,11 +32,11 @@ class InitCtrl {
     // Initialize Permissions
     ref.read(permissionCtrlProvider).initialize();
 
-    // Goto Next Route
+    // Show WalkThrough
     // await ref.read(sharedPrefProvider).remove('SHOW_WALKTHROUGH');
-    if (_showWalkThrough) {
-      ref.read(sharedPrefProvider).setBool('SHOW_WALKTHROUGH', false);
+    if (ref.read(waklthroughProvider).isShow()) {
       await ref.read(pageUtilsProvider).goto(page: WalkthroughView());
+      await ref.read(waklthroughProvider).startTheApps();
     }
 
     // Check User authorized
@@ -48,10 +52,14 @@ class InitCtrl {
     //   return false;
     // }
 
-    // ref.read(goRouterProvider).go('/home');
-    ref.read(pageUtilsProvider).gotoR(page: HomeQuranView());
+    // User Role
+    // await ref.read(sharedPrefProvider).remove('USER-ROLE');
+    if (ref.read(roleSelectorProvider.notifier).getUserRole() == null) {
+      await ref.read(pageUtilsProvider).gotoR(page: RoleSelectorView());
+    }
+
+    ref.read(goRouterProvider).go('/home');
+    // ref.read(pageUtilsProvider).gotoR(page: HomeQuranView());
     return true;
   }
 }
-
-final initCtrlProvider = Provider(InitCtrl.new);

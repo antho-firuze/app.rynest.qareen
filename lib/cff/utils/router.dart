@@ -1,3 +1,6 @@
+import 'package:qareen/features/chat/views/chat_list_view.dart';
+import 'package:qareen/features/chat/views/chat_view.dart';
+import 'package:qareen/features/notification/views/notification_view.dart';
 import 'package:qareen/features/user/views/dashboard_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -12,8 +15,8 @@ import 'package:qareen/features/user/views/participant_view.dart';
 // Private Navigators
 final rootNavigatorKey = GlobalKey<NavigatorState>();
 final _homeNavigatorKey = GlobalKey<NavigatorState>(debugLabel: 'home');
-final _dashboardNavigatorKey = GlobalKey<NavigatorState>(debugLabel: 'dashboard');
-final _participantNavigatorKey = GlobalKey<NavigatorState>(debugLabel: 'participant');
+final _chatNavigatorKey = GlobalKey<NavigatorState>(debugLabel: 'chat_list');
+final _notificationNavigatorKey = GlobalKey<NavigatorState>(debugLabel: 'notification');
 final _profileNavigatorKey = GlobalKey<NavigatorState>(debugLabel: 'profile');
 
 final goRouterProvider = Provider<GoRouter>((ref) => router);
@@ -36,20 +39,20 @@ final GoRouter router = GoRouter(
           ],
         ),
         StatefulShellBranch(
-          navigatorKey: _dashboardNavigatorKey,
+          navigatorKey: _chatNavigatorKey,
           routes: [
             GoRoute(
-              path: RegistrationView.routeName,
-              pageBuilder: (context, state) => NoTransitionPage(key: state.pageKey, child: const DashboardView()),
+              path: ChatListView.routeName,
+              pageBuilder: (context, state) => NoTransitionPage(key: state.pageKey, child: const ChatListView()),
             ),
           ],
         ),
         StatefulShellBranch(
-          navigatorKey: _participantNavigatorKey,
+          navigatorKey: _notificationNavigatorKey,
           routes: [
             GoRoute(
-              path: ParticipantView.routeName,
-              pageBuilder: (context, state) => NoTransitionPage(key: state.pageKey, child: const ParticipantView()),
+              path: NotificationView.routeName,
+              pageBuilder: (context, state) => NoTransitionPage(key: state.pageKey, child: const NotificationView()),
             ),
           ],
         ),

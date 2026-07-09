@@ -16,7 +16,7 @@ class CustomCard extends StatelessWidget {
         clipper: ShapeBorderClipper(shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(3))),
         child: CustomInkWell(
           onTap: onTap,
-          child: Container(
+          text: Container(
             decoration: BoxDecoration(
               // color: Colors.transparent,
               border: const Border(bottom: BorderSide(color: Colors.transparent, width: 8)),

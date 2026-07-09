@@ -3,7 +3,6 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:qareen/cff/core/app_color.dart';
 import 'package:qareen/cff/utils/my_scaffold.dart';
-import 'package:qareen/cff/utils/my_ui.dart';
 import 'package:qareen/cff/utils/orientation_utils.dart';
 import 'package:qareen/cff/utils/system_ui_overlay.dart';
 import 'package:qareen/cff/utils/ui_helper.dart';
@@ -31,14 +30,15 @@ class _SplashViewState extends ConsumerState<SplashView> {
       if (result == false) {
         SystemNavigator.pop();
       }
+      SystemUIOverlay.showUIOverlay;
     });
     super.initState();
   }
 
   @override
   void dispose() {
-    SystemUIOverlay.showUIOverlay;
     super.dispose();
+    SystemUIOverlay.showUIOverlay;
   }
 
   @override

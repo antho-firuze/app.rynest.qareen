@@ -89,7 +89,7 @@ class ChapterVerse extends ConsumerWidget {
             child: CustomInkWell(
               radius: 0,
               onTap: () => onTap?.call(chapter, verse),
-              child: ListView(
+              text: ListView(
                 primary: false,
                 shrinkWrap: true,
                 children: [

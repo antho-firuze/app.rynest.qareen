@@ -34,6 +34,7 @@ class SystemUIOverlay {
   }
 
   static get showUIOverlay {
+    // print('showUIOverlay');
     // This is for showing after hiding it
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: SystemUiOverlay.values);
 
@@ -48,6 +49,7 @@ class SystemUIOverlay {
   }
 
   static get hideUIOverlay {
+    // print('hideUIOverlay');
     // This is for hiding status bar
     // =============================
     // Method #1

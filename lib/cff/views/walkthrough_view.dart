@@ -1,7 +1,6 @@
 import 'package:go_router/go_router.dart';
 import 'package:qareen/cff/utils/darkmode_utils.dart';
 import 'package:qareen/cff/utils/my_scaffold.dart';
-import 'package:qareen/cff/utils/system_ui_overlay.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:qareen/cff/core/app_color.dart';
@@ -26,34 +25,28 @@ class _WalkthroughViewState extends ConsumerState<WalkthroughView> {
   int currIndex = 0;
 
   @override
-  void initState() { 
-    super.initState();
-    SystemUIOverlay.hideUIOverlay;
-  }
-
-  @override
-  void dispose() {
-    SystemUIOverlay.showUIOverlay;
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
-    return MyScaffold(
-      child: Stack(
-        children: [
-          PageView.builder(
-            controller: controller,
-            itemCount: walks.length,
-            itemBuilder: (context, index) => BuildPage(walk: walks[index]),
-            onPageChanged: (index) {
-              setState(() {
-                currIndex = index;
-              });
-            },
-          ),
-          NavigatorWidget(controller: controller, currIndex: currIndex),
-        ],
+    return PopScope(
+      canPop: false,
+      onPopInvokedWithResult: (didPop, result) {
+        if (didPop) return;
+      },
+      child: MyScaffold(
+        child: Stack(
+          children: [
+            PageView.builder(
+              controller: controller,
+              itemCount: walks.length,
+              itemBuilder: (context, index) => BuildPage(walk: walks[index]),
+              onPageChanged: (index) {
+                setState(() {
+                  currIndex = index;
+                });
+              },
+            ),
+            NavigatorWidget(controller: controller, currIndex: currIndex),
+          ],
+        ),
       ),
     );
   }

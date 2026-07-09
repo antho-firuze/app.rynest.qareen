@@ -108,7 +108,7 @@ class MenuButton extends ConsumerWidget {
                 child: CustomInkWell(
                   radius: 13,
                   onTap: onTap,
-                  child: Card(
+                  text: Card(
                     elevation: 0,
                     color: bgColor ?? Colors.transparent,
                     shape: RoundedRectangleBorder(

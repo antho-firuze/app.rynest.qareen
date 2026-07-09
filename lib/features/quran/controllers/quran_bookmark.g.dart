@@ -176,7 +176,7 @@ final class QuranBookmarkProvider
   }
 }
 
-String _$quranBookmarkHash() => r'4246448b988407d90cb16c8c4b2a41ec1ac29f33';
+String _$quranBookmarkHash() => r'b150c64172c0a474987c278265c7a7283681e0b6';
 
 abstract class _$QuranBookmark extends $Notifier<List<Bookmark>> {
   List<Bookmark> build();

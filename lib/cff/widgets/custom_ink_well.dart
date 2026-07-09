@@ -1,41 +1,40 @@
 import 'package:flutter/material.dart';
+import 'package:qareen/cff/utils/ui_helper.dart';
 
 class CustomInkWell extends StatelessWidget {
   const CustomInkWell({
     super.key,
     this.tooltip,
     this.onTap,
-    this.child,
+    this.text,
     this.radius = 12,
     this.color,
-    this.padding = EdgeInsets.zero,
     this.isCircle = false,
+    this.icon,
+    this.isIconPositionStart = false,
   });
 
   final String? tooltip;
   final void Function()? onTap;
-  final Widget? child;
+  final Widget? text;
+  final Widget? icon;
+  final bool isIconPositionStart;
   final double radius;
   final Color? color;
   final bool isCircle;
-  final EdgeInsetsGeometry padding;
 
   @override
   Widget build(BuildContext context) {
-    return ClipRRect(
-      borderRadius:
-          isCircle ? BorderRadius.circular(35) : BorderRadius.circular(radius),
-      child: Material(
-        color: color ?? Colors.transparent,
-        child: Tooltip(
-          message: tooltip ?? '',
-          child: InkWell(
-            onTap: onTap,
-            child: Padding(
-              padding: padding,
-              child: child,
-            ),
-          ),
+    return Tooltip(
+      message: tooltip ?? '',
+      child: InkWell(
+        onTap: onTap,
+        child: Row(
+          children: [
+            if (isIconPositionStart == true && icon != null) ...[(icon as Icon).clr(Colors.green[600])],
+            (text as Text).clr(Colors.green[600]),
+            if (isIconPositionStart == false && icon != null) ...[(icon as Icon).clr(Colors.green[600])],
+          ],
         ),
       ),
     );

@@ -1,9 +1,9 @@
 import 'package:qareen/cff/controllers/permission_ctrl.dart';
 import 'package:qareen/cff/utils/datetime_utils.dart';
+import 'package:qareen/cff/utils/my_scaffold.dart';
 import 'package:qareen/cff/utils/ui_helper.dart';
 import 'package:qareen/cff/widgets/exceptions/data_exeception_widget.dart';
 import 'package:qareen/features/notification/controllers/notification_ctrl.dart';
-import 'package:qareen/cff/utils/my_ui.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -14,52 +14,50 @@ class NotificationView extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return MyUI(
-      child: Scaffold(
-        appBar: AppBar(
-          // titleSpacing: 20,
-          title: Text('Notifikasi'),
-          actions: [
-            IconButton(onPressed: () => ref.read(notificationCtrlProvider).clear(), icon: Icon(Icons.search)),
-            // SettingsButton(onPressed: () => context.goto(page: const NotificationSettingView())),
-            // SettingsButton(
-            //   onPressed: ref.read(notificationCtrlProvider).goSettingPage,
-            // ),
-            // IconButton(
-            //   onPressed: () {},
-            //   icon: Icon(Icons.more_vert, color: oWhite.whenDark(oWhite)),
-            // ),
-          ],
-        ),
-        body: RefreshIndicator(
-          onRefresh: () async {
-            await Future.delayed(const Duration(seconds: 1));
-          },
-          child: Column(
-            children: [
-              if (ref.watch(permissionCtrlProvider).allowNotification == false)
-                if (ref.watch(notificationCtrlProvider).showNotificationPermissionReminder == true)
-                  NotificationPermissionWidget(),
-              // EmptyNotificationWidget(),
-              // Text(ref.watch(notificationProvider)).bold(),
-              Expanded(
-                child: Scrollbar(
-                  child: ListView.builder(
-                    shrinkWrap: true,
-                    physics: const ClampingScrollPhysics(),
-                    itemCount: 20,
-                    itemBuilder: (context, index) {
-                      return ListTile(
-                        title: Text('Notifikasi ${index + 1}').bold(),
-                        subtitle: Text('Ini adalah pesan untuk notifikasi $index'),
-                        trailing: Text(DateTime.now().subtract(Duration(minutes: index * 5)).formatTimeAgo()),
-                      );
-                    },
-                  ),
+    return MyScaffold(
+      appBar: AppBar(
+        titleSpacing: 20,
+        title: Text('Notifikasi'),
+        actions: [
+          IconButton(onPressed: () => ref.read(notificationCtrlProvider).clear(), icon: Icon(Icons.search)),
+          // SettingsButton(onPressed: () => context.goto(page: const NotificationSettingView())),
+          // SettingsButton(
+          //   onPressed: ref.read(notificationCtrlProvider).goSettingPage,
+          // ),
+          // IconButton(
+          //   onPressed: () {},
+          //   icon: Icon(Icons.more_vert, color: oWhite.whenDark(oWhite)),
+          // ),
+        ],
+      ),
+      child: RefreshIndicator(
+        onRefresh: () async {
+          await Future.delayed(const Duration(seconds: 1));
+        },
+        child: Column(
+          children: [
+            if (ref.watch(permissionCtrlProvider).allowNotification == false)
+              if (ref.watch(notificationCtrlProvider).showNotificationPermissionReminder == true)
+                NotificationPermissionWidget(),
+            // EmptyNotificationWidget(),
+            // Text(ref.watch(notificationProvider)).bold(),
+            Expanded(
+              child: Scrollbar(
+                child: ListView.builder(
+                  shrinkWrap: true,
+                  physics: const ClampingScrollPhysics(),
+                  itemCount: 20,
+                  itemBuilder: (context, index) {
+                    return ListTile(
+                      title: Text('Notifikasi ${index + 1}').bold(),
+                      subtitle: Text('Ini adalah pesan untuk notifikasi $index'),
+                      trailing: Text(DateTime.now().subtract(Duration(minutes: index * 5)).formatTimeAgo()),
+                    );
+                  },
                 ),
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );

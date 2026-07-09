@@ -17,11 +17,13 @@ class MyScaffold extends ConsumerWidget {
     this.enabledSafeArea = true,
     this.showScreenInfo = false,
     this.showConnectivityInfo = true,
+    this.resizeToAvoidBottomInset,
     this.orientation = ScreenOrientation.both,
     this.customAppBar,
     this.customBackground,
     this.appBarColor,
     this.backgroundColor,
+    this.invertBrightness = false,
   });
 
   final PreferredSizeWidget? appBar;
@@ -29,11 +31,13 @@ class MyScaffold extends ConsumerWidget {
   final bool enabledSafeArea;
   final bool showScreenInfo;
   final bool showConnectivityInfo;
+  final bool? resizeToAvoidBottomInset;
   final ScreenOrientation orientation;
   final Widget? customAppBar;
   final Widget? customBackground;
   final Color? appBarColor;
   final Color? backgroundColor;
+  final bool invertBrightness;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -42,12 +46,10 @@ class MyScaffold extends ConsumerWidget {
       ThemeMode.dark => 'dark',
       _ => 'system',
     };
+    var _brightness = _newTheme == 'light' || _newTheme == 'system' ? Brightness.dark : Brightness.light;
     // print('build my_scaffold');
     return AnnotatedRegion<SystemUiOverlayStyle>(
-      value: SystemUiOverlayStyle(
-        statusBarIconBrightness: _newTheme == 'light' || _newTheme == 'system' ? Brightness.dark : Brightness.light,
-        statusBarBrightness: _newTheme == 'light' || _newTheme == 'system' ? Brightness.dark : Brightness.light,
-      ),
+      value: SystemUiOverlayStyle(statusBarIconBrightness: _brightness, statusBarBrightness: _brightness),
       child: MediaQuery(
         data: MediaQuery.of(context).copyWith(textScaler: const TextScaler.linear(.8)),
         child: ConnectivityWrapper(
@@ -69,13 +71,17 @@ class MyScaffold extends ConsumerWidget {
                 appBar: customAppBar == null
                     ? appBar == null
                           ? null
-                          : (appBar as AppBar).copyWith(backgroundColor: appBarColor)
+                          : (appBar as AppBar).copyWith(
+                              backgroundColor: appBarColor ?? (appBar as AppBar).backgroundColor,
+                              systemOverlayStyle: invertBrightness ? SystemUiOverlayStyle() : null,
+                            )
                     : appBar == null
                     ? null
                     : (appBar as AppBar).copyWith(backgroundColor: Colors.transparent),
                 backgroundColor: customBackground == null && customAppBar == null
                     ? backgroundColor
                     : Colors.transparent,
+                resizeToAvoidBottomInset: resizeToAvoidBottomInset,
                 body: enabledSafeArea ? SafeArea(child: child ?? Container()) : child,
               ),
               // SCREEN INFO
@@ -89,15 +95,19 @@ class MyScaffold extends ConsumerWidget {
 }
 
 extension CustomAppBar on AppBar {
-  AppBar copyWith({Color? backgroundColor}) => AppBar(
+  AppBar copyWith({Color? backgroundColor, SystemUiOverlayStyle? systemOverlayStyle}) => AppBar(
     automaticallyImplyLeading: automaticallyImplyLeading,
     title: title,
     titleSpacing: titleSpacing,
+    centerTitle: centerTitle,
     actions: actions,
     leading: leading,
     leadingWidth: leadingWidth,
     shape: shape,
     bottom: bottom,
     backgroundColor: backgroundColor,
+    systemOverlayStyle: systemOverlayStyle,
+    flexibleSpace: flexibleSpace,
+    toolbarHeight: toolbarHeight,
   );
 }
